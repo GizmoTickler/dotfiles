@@ -1,0 +1,143 @@
+# Homebrew Bundle file for automated tool installation
+# Install with: brew bundle --file ~/.config/brew/Brewfile
+
+# Taps
+tap "fluxcd/tap"
+tap "go-task/tap"
+
+# === Essential Tools ===
+brew "git"
+brew "git-lfs"
+brew "curl"
+brew "wget"
+brew "openssh"
+
+# === Shell and Prompt ===
+brew "fish"
+brew "starship"
+brew "chezmoi"
+
+# === Modern CLI Replacements ===
+brew "bat"          # Better cat
+brew "eza"          # Better ls (successor to exa)
+brew "fd"           # Better find
+brew "ripgrep"      # Better grep
+brew "fzf"          # Fuzzy finder
+brew "zoxide"       # Better cd
+brew "htop"         # Better top
+
+# === Development Tools ===
+brew "neovim"       # Modern vim
+brew "atuin"        # Shell history sync
+
+# === Development Formatters & Linters ===
+brew "stylua"       # Lua formatter
+brew "black"        # Python formatter
+brew "isort"        # Python import sorter
+brew "shfmt"        # Shell formatter
+brew "hadolint"     # Dockerfile linter
+brew "taplo"        # TOML formatter
+
+# === Programming Languages & Runtimes ===
+brew "node"         # Node.js latest stable
+brew "python@3.12"  # Python 3.12
+brew "python@3.11"  # Python 3.11 (for compatibility)
+brew "go"           # Go latest
+brew "rust"         # Rust latest
+
+# === Python Tools ===
+brew "pipx"         # Install Python applications in isolated environments
+
+# === Kubernetes Ecosystem ===
+brew "kubectl"
+brew "krew"         # kubectl plugin manager  
+brew "k9s"          # Kubernetes TUI
+brew "helm"
+brew "helmfile" 
+brew "kustomize"
+brew "kubecolor"    # Colorized kubectl
+brew "kubeconform"  # Kubernetes YAML validation
+brew "stern"        # Multi-pod log tailing
+brew "talosctl"     # Talos Linux CLI
+
+# === Container Tools ===
+brew "docker"
+brew "docker-buildx"
+
+# === Cloud Tools ===
+brew "doctl"        # DigitalOcean CLI
+brew "cloudflared"  # Cloudflare tunnel
+cask "google-cloud-sdk"  # Google Cloud Platform CLI
+
+# === Infrastructure Tools ===
+brew "terraform"    # Infrastructure as Code
+brew "ansible"      # Configuration management
+
+# === Network Tools ===
+brew "nmap"
+brew "mtr"          # Network diagnostic
+brew "doggo"        # Modern dig
+
+# === Data Processing ===
+brew "jq"           # JSON processor
+brew "yq"           # YAML processor  
+brew "jo"           # JSON output
+
+# === System Utils ===
+brew "coreutils"    # GNU core utilities
+brew "findutils"    # GNU find, locate, updatedb, xargs
+brew "gnu-sed"      # GNU sed
+brew "gnu-tar"      # GNU tar
+brew "grep"         # GNU grep
+brew "gawk"         # GNU awk
+brew "gettext"      # GNU gettext
+brew "make"         # GNU make
+brew "moreutils"    # Additional Unix utilities
+
+# === Development Utilities ===
+brew "gh"           # GitHub CLI
+brew "pre-commit"   # Git hooks
+brew "prettier"     # Code formatter
+brew "yamllint"     # YAML linter
+
+# === Security & GPG ===
+brew "gnupg"
+brew "pinentry-mac"
+brew "cosign"       # Container signing
+
+# === Additional Tools ===
+brew "lolcat"       # Rainbow text
+brew "thefuck"      # Command correction
+brew "viddy"        # Modern watch
+brew "minijinja-cli" # Jinja2 templating
+brew "tailscale"    # VPN mesh network
+
+# === Specialized Tools ===
+brew "fluxcd/tap/flux"      # GitOps for Kubernetes
+brew "go-task/tap/go-task"  # Task runner
+
+# === Applications (Casks) ===
+cask "1password"
+cask "1password-cli"
+cask "visual-studio-code"
+cask "firefox"
+cask "discord"
+cask "iterm2"
+
+# === Fonts ===
+cask "font-fira-code-nerd-font"
+cask "font-hack-nerd-font"
+cask "font-meslo-lg-nerd-font"
+
+# === Optional Development Tools (uncomment if needed) ===
+# brew "vault"         # HashiCorp Vault
+# brew "consul"        # HashiCorp Consul
+# cask "docker"        # Docker Desktop
+# cask "postman"       # API testing
+
+# === Language Servers (for Neovim LSP) ===
+# These will be installed by Mason in Neovim, but can be pre-installed
+# brew "lua-language-server"
+# brew "typescript-language-server" 
+# brew "pyright"
+# brew "gopls"

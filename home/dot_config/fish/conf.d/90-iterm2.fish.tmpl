@@ -1,0 +1,76 @@
+# iTerm2 Integration for Fish Shell
+{{- if .os.darwin }}
+
+# iTerm2 Shell Integration
+if test "$TERM_PROGRAM" = "iTerm.app"
+    # Enable iTerm2 shell integration if available
+    if test -e {{ .chezmoi.homeDir }}/.iterm2_shell_integration.fish
+        source {{ .chezmoi.homeDir }}/.iterm2_shell_integration.fish
+    end
+    
+    # Set iTerm2 badge (optional)
+    function iterm2_print_user_vars
+        # Show current directory in badge
+        iterm2_set_user_var currentDir (basename (pwd))
+        # Show git branch if in git repo
+        if git rev-parse --git-dir >/dev/null 2>&1
+            iterm2_set_user_var gitBranch (git branch --show-current 2>/dev/null)
+        end
+    end
+    
+    # Function to change iTerm2 profile based on environment
+    function iterm2_profile
+        if test (count $argv) -eq 0
+            echo "Usage: iterm2_profile <profile_name>"
+            echo "Available profiles: Default, Dark, Light, Work"
+            return 1
+        end
+        
+        printf "\e]50;SetProfile=%s\a" $argv[1]
+    end
+    
+    # Function to set iTerm2 tab title
+    function title
+        if test (count $argv) -eq 0
+            set title (basename (pwd))
+        else
+            set title $argv[1]
+        end
+        printf "\e]0;%s\a" "$title"
+    end
+    
+    # Automatically set tab title to current directory
+    function __iterm2_auto_title --on-variable PWD
+        if test "$TERM_PROGRAM" = "iTerm.app"
+            title (basename (pwd))
+        end
+    end
+    
+    # SSH integration - change profile when SSH'ing
+    function ssh
+        if test (count $argv) -gt 0
+            # Switch to SSH profile
+            iterm2_profile "SSH"
+            # Run SSH command
+            command ssh $argv
+            # Switch back to default profile
+            iterm2_profile "Default"
+        else
+            command ssh
+        end
+    end
+    
+    # Kubernetes context integration
+    if type -q kubectl
+        function __iterm2_k8s_context --on-variable KUBECONFIG
+            if test "$TERM_PROGRAM" = "iTerm.app"
+                set -l ctx (kubectl config current-context 2>/dev/null)
+                if test -n "$ctx"
+                    iterm2_set_user_var k8sContext "$ctx"
+                end
+            end
+        end
+    end
+end
+
+{{- end }}

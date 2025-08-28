@@ -1,0 +1,25 @@
+# Zsh configuration
+# This file provides basic zsh setup with starship prompt
+
+# Initialize starship prompt
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
+fi
+
+# Basic zsh options
+setopt HIST_VERIFY
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_REDUCE_BLANKS
+
+# History configuration
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+# Enable completions
+autoload -Uz compinit
+compinit

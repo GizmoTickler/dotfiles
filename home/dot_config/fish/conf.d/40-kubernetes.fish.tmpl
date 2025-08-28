@@ -1,0 +1,20 @@
+# Kubernetes tools configuration
+if type -q kubectl
+    # Add kubectl completion
+    kubectl completion fish | source
+    
+    # Set default context if specified
+    {{- if .tools.kubectl_context }}
+    set -gx KUBECONFIG {{ .chezmoi.homeDir }}/.kube/config
+    {{- end }}
+end
+
+# Krew - kubectl plugin manager
+if test -d {{ .chezmoi.homeDir }}/.krew
+    fish_add_path --global {{ .chezmoi.homeDir }}/.krew/bin
+end
+
+# Talos CLI
+if type -q talosctl
+    talosctl completion fish | source
+end

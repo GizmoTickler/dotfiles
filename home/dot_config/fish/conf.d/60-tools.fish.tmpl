@@ -1,0 +1,25 @@
+# Additional productivity tools
+
+# Zoxide - better cd
+if type -q zoxide
+    zoxide init fish | source
+end
+
+# FZF - fuzzy finder
+if type -q fzf
+    fzf --fish | source
+end
+
+# UV - Python package installer
+if test -f {{ .chezmoi.homeDir }}/.local/bin/env.fish
+    source {{ .chezmoi.homeDir }}/.local/bin/env.fish
+end
+
+# Google Cloud SDK
+if test -f {{ .chezmoi.homeDir }}/Downloads/google-cloud-sdk/path.fish.inc
+    source {{ .chezmoi.homeDir }}/Downloads/google-cloud-sdk/path.fish.inc
+end
+
+if test -f {{ .chezmoi.homeDir }}/Downloads/google-cloud-sdk/completion.fish.inc
+    source {{ .chezmoi.homeDir }}/Downloads/google-cloud-sdk/completion.fish.inc
+end

@@ -1,0 +1,74 @@
+# Google Cloud Platform Configuration
+{{- if .os.darwin }}
+
+# Add Google Cloud SDK to PATH
+if test -d /opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk
+    set -gx GOOGLE_CLOUD_SDK_ROOT /opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk
+    fish_add_path --global $GOOGLE_CLOUD_SDK_ROOT/bin
+    
+    # Source completion if available
+    if test -f $GOOGLE_CLOUD_SDK_ROOT/path.fish.inc
+        source $GOOGLE_CLOUD_SDK_ROOT/path.fish.inc
+    end
+end
+
+# Google Cloud environment from 1Password
+{{- if .onepassword.enabled }}
+{{- if .secrets.gcp_project_id }}
+set -gx GOOGLE_CLOUD_PROJECT {{ .secrets.gcp_project_id }}
+set -gx GCLOUD_PROJECT {{ .secrets.gcp_project_id }}
+{{- end }}
+
+{{- if .secrets.gcp_service_account_key }}
+# Service account key for application default credentials
+set -l gcp_key_file {{ .chezmoi.homeDir }}/.config/gcloud/.sa_key_$(echo {{ .secrets.gcp_service_account_key | quote }} | shasum | cut -d' ' -f1 | head -c 8).json
+
+# Create service account key file if it doesn't exist or is outdated
+if not test -f "$gcp_key_file"
+    echo "🔑 Setting up Google Cloud service account key..."
+    mkdir -p {{ .chezmoi.homeDir }}/.config/gcloud
+    
+    # Clean up old key files
+    rm -f {{ .chezmoi.homeDir }}/.config/gcloud/.sa_key_*.json 2>/dev/null
+    
+    # Create new key file with restricted permissions
+    echo {{ .secrets.gcp_service_account_key | quote }} > "$gcp_key_file"
+    chmod 600 "$gcp_key_file"
+    
+    # Set extended attributes on macOS to prevent backup
+    {{- if .os.darwin }}
+    xattr -w com.apple.metadata:com_apple_backup_excludeItem com.apple.backupd "$gcp_key_file" 2>/dev/null || true
+    {{- end }}
+end
+
+# Set application default credentials to use service account
+set -gx GOOGLE_APPLICATION_CREDENTIALS "$gcp_key_file"
+{{- end }}
+{{- end }}
+
+# Initialize gcloud if available
+if type -q gcloud
+    # Set default project if configured
+    {{- if .secrets.gcp_project_id }}
+    gcloud config set project {{ .secrets.gcp_project_id }} 2>/dev/null
+    {{- end }}
+    
+    # Enable useful gcloud components
+    function __gcloud_init_components
+        set -l components alpha beta kubectl
+        for component in $components
+            if not gcloud components list --filter="id:$component AND state.name:Installed" --format="value(id)" | grep -q $component
+                echo "📦 Installing gcloud component: $component"
+                gcloud components install $component --quiet
+            end
+        end
+    end
+    
+    # Run component initialization in background on first load
+    if not test -f ~/.gcloud_components_initialized
+        __gcloud_init_components &
+        touch ~/.gcloud_components_initialized
+    end
+end
+
+{{- end }}

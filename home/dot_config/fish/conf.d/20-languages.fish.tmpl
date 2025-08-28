@@ -1,0 +1,48 @@
+# Programming Languages Configuration
+# Use Homebrew-installed runtimes (no mise dependency)
+{{- if .os.darwin }}
+
+# Python - Use Homebrew Python as default
+if test -d /opt/homebrew/opt/python@3.12/bin
+    fish_add_path --global /opt/homebrew/opt/python@3.12/bin
+end
+
+# Python 3.11 compatibility (if installed)
+if test -d /opt/homebrew/opt/python@3.11/bin
+    fish_add_path --global /opt/homebrew/opt/python@3.11/bin
+end
+
+# Node.js - Use Homebrew Node.js
+if type -q node
+    set -gx NODE_PATH (npm config get prefix)/lib/node_modules
+    # Add npm global packages to PATH
+    set -gx NPM_CONFIG_PREFIX {{ .chezmoi.homeDir }}/.npm-global
+    fish_add_path --global {{ .chezmoi.homeDir }}/.npm-global/bin
+end
+
+# Go - Use Homebrew Go with custom GOPATH
+if type -q go
+    set -gx GOROOT (go env GOROOT)
+    set -gx GOPATH {{ .chezmoi.homeDir }}/.go
+    fish_add_path --global {{ .chezmoi.homeDir }}/.go/bin
+end
+
+# Rust - Use Homebrew Rust with Cargo
+if type -q rustc
+    fish_add_path --global {{ .chezmoi.homeDir }}/.cargo/bin
+end
+
+{{- end }}
+
+# pipx for isolated Python applications
+if type -q pipx
+    fish_add_path --global {{ .chezmoi.homeDir }}/.local/bin
+end
+
+# Python development environment
+set -gx PYTHONDONTWRITEBYTECODE 1
+set -gx PYTHONUNBUFFERED 1
+
+# Development directories
+set -gx PROJECTS_DIR {{ .chezmoi.homeDir }}/Projects
+set -gx WORKSPACE_DIR {{ .chezmoi.homeDir }}/Workspace

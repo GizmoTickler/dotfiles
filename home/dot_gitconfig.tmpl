@@ -1,0 +1,76 @@
+[user]
+  # Git credentials from 1Password (automatically configured)
+  name = {{ .git.user }}
+  email = {{ .git.email }}
+  {{- if .git.signingkey }}
+  signingkey = {{ .git.signingkey }}
+  {{- end }}
+
+{{- if .git.signingkey }}
+[gpg]
+  format = ssh
+{{- end }}
+
+[core]
+  editor = {{ .tools.editor | default "nvim" }}
+  autocrlf = input
+  excludesfile = {{ .chezmoi.homeDir }}/.gitignore_global
+
+{{- if .git.signingkey }}
+[commit]
+  gpgsign = true
+{{- end }}
+
+[init]
+  defaultBranch = main
+
+[pull]
+  rebase = true
+
+[push]
+  default = simple
+  autoSetupRemote = true
+
+[merge]
+  ff = only
+
+[status]
+  submoduleSummary = false
+
+{{- if .git.signingkey }}
+[tag]
+  forceSignAnnotated = true
+{{- end }}
+
+[alias]
+  st = status -sb
+  co = checkout
+  br = branch
+  ci = commit
+  ca = commit --amend
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  lg = log --oneline --graph --decorate
+  who = shortlog -n -s --no-merges
+
+[filter "lfs"]
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+
+# Use SSH instead of HTTPS for GitHub
+[url "ssh://git@github.com/"]
+  pushInsteadOf = https://github.com/
+
+{{- if .os.darwin }}
+[credential]
+  helper = osxkeychain
+{{- end }}
+
+{{- if .onepassword.enabled }}
+# 1Password CLI integration for GitHub credentials
+# Uncomment to use 1Password for HTTPS authentication:
+# [credential "https://github.com"]
+#   helper = !op item get "GitHub Personal Access Token" --field password
+{{- end }}

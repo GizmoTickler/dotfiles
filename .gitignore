@@ -1,0 +1,37 @@
+# Dotfiles repository .gitignore
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+
+# Local environment files
+.env.local
+.env.*.local
+
+# Backup files
+*.bak
+*.backup
+
+# Test files
+test/
+tests/
+
+# Claude Code directory (contains local settings and cache)
+.claude/

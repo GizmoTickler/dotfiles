@@ -1,0 +1,134 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true
+
+format = """\
+  $os\
+  $username\
+  $directory\
+  $kubernetes\
+  $docker_context\
+  $python\
+  $golang\
+  $nodejs\
+  $rust\
+  $git_branch\
+  $git_commit\
+  $git_state\
+  $git_status\
+  $cmd_duration\
+  $character\
+  """
+
+[character]
+success_symbol = "\n[❯](bold green)"
+error_symbol = "\n[✖](bold red)"
+vimcmd_symbol = "\n[❮](bold yellow)"
+
+[cmd_duration]
+min_time = 500
+format = '\[[took $duration](bold yellow)\] '
+
+[os]
+disabled = false
+style = "bg:#a3aed2 fg:#090c0c"
+
+[os.symbols]
+Macos = "🍎 "
+Linux = "🐧 "
+Windows = "🪟 "
+
+[username]
+disabled = false
+show_always = false
+style_user = "bold blue"
+style_root = "bold red"
+
+[directory]
+disabled = false
+truncation_length = 8
+truncate_to_repo = true
+read_only = " 🔒"
+home_symbol = " 🏠"
+style = "bold cyan"
+
+[kubernetes]
+disabled = false
+symbol = "⎈ "
+format = '[\[$symbol$context \($namespace\)\]](bold bright-green) '
+style = "bold bright-green"
+
+# Only show kubernetes when in a directory with k8s files
+detect_files = ['k8s', 'kubernetes', 'kustomization.yaml', 'kustomization.yml', 'skaffold.yaml', 'helmfile.yaml']
+detect_folders = ['k8s', 'kubernetes', '.kube']
+
+[docker_context]
+disabled = false
+symbol = "🐳 "
+format = '[\[$symbol$context\]](bold blue) '
+
+[python]
+disabled = false
+format = '\[[$symbol${pyenv_prefix}(${version})(\($virtualenv\))]($style)\] '
+symbol = "🐍 "
+style = "yellow bold"
+
+[golang]
+disabled = false
+format = '\[[$symbol($version)]($style)\] '
+symbol = "🐹 "
+style = "bold cyan"
+
+[nodejs]
+disabled = false
+format = '\[[$symbol($version)]($style)\] '
+symbol = "⬢ "
+style = "bold green"
+
+[rust]
+disabled = false
+format = '\[[$symbol($version)]($style)\] '
+symbol = "🦀 "
+style = "bold red"
+
+[git_branch]
+disabled = false
+symbol = " "
+style = "bold purple"
+
+[git_commit]
+disabled = false
+commit_hash_length = 8
+only_detached = false
+style = "grey"
+tag_symbol = " 🏷 "
+
+[git_status]
+disabled = false
+style = "red bold"
+conflicted = "🏳"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+up_to_date = "✓"
+untracked = "?${count}"
+modified = "!${count}"
+staged = "+${count}"
+renamed = "»${count}"
+deleted = "✘${count}"
+
+# Disable less useful modules for performance
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[env_var]
+disabled = true
+
+[memory_usage]
+disabled = true
+
+[battery]
+disabled = true

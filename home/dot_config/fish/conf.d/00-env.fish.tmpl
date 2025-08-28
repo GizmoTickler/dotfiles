@@ -1,0 +1,35 @@
+# Environment variables - loaded first
+set -gx EDITOR nvim
+set -gx VISUAL nvim
+set -gx KUBE_EDITOR nvim
+
+# Language settings
+set -gx LANG en_US.UTF-8
+set -gx LC_ALL en_US.UTF-8
+
+# Development environment
+set -gx GOPATH {{ .chezmoi.homeDir }}/.go
+set -gx GOBIN {{ .chezmoi.homeDir }}/.go/bin
+set -gx ANSIBLE_FORCE_COLOR true
+set -gx ANSIBLE_HOST_KEY_CHECKING False
+set -gx PY_COLORS true
+
+# XDG Base Directory Specification
+set -gx XDG_CONFIG_HOME {{ .chezmoi.homeDir }}/.config
+set -gx XDG_DATA_HOME {{ .chezmoi.homeDir }}/.local/share
+set -gx XDG_CACHE_HOME {{ .chezmoi.homeDir }}/.cache
+
+# Python configuration
+set -gx PYTHONPATH {{ .chezmoi.homeDir }}/.local/lib/python
+
+# Node.js configuration
+set -gx NPM_CONFIG_PREFIX {{ .chezmoi.homeDir }}/.npm-global
+
+# Rust configuration
+set -gx CARGO_HOME {{ .chezmoi.homeDir }}/.cargo
+
+# Add common paths to PATH
+fish_add_path --global {{ .chezmoi.homeDir }}/.local/bin
+fish_add_path --global {{ .chezmoi.homeDir }}/.cargo/bin
+fish_add_path --global {{ .chezmoi.homeDir }}/.go/bin
+fish_add_path --global {{ .chezmoi.homeDir }}/.npm-global/bin

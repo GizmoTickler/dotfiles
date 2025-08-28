@@ -1,0 +1,46 @@
+format: yaml
+data:
+  # 1Password CLI integration
+  onepassword:
+    enabled: {{ lookPath "op" }}
+    account: "my.1password.com"  # Change to your 1Password account
+  
+  # Personal information from 1Password (required)
+  name: {{ onepasswordRead "op://Private/Git Config/Section_wfx3osideztjgf2wonbbdb7ae4/name" | quote }}
+  email: {{ onepasswordRead "op://Private/Git Config/Section_wfx3osideztjgf2wonbbdb7ae4/email" | quote }}
+  
+  # Git configuration from 1Password (required)
+  git:
+    user: {{ onepasswordRead "op://Private/Git Config/Section_wfx3osideztjgf2wonbbdb7ae4/name" | quote }}
+    email: {{ onepasswordRead "op://Private/Git Config/Section_wfx3osideztjgf2wonbbdb7ae4/email" | quote }}
+    # SSH signing key from 1Password (required)
+    signingkey: {{ onepasswordRead "op://Infrastructure/Github/public key" | quote }}
+  
+  # Machine type detection
+  machine:
+    type: "{{ if (contains "work" .chezmoi.hostname) }}work{{ else }}personal{{ end }}"
+  
+  # OS detection
+  os:
+    darwin: {{ eq .chezmoi.os "darwin" }}
+    linux: {{ eq .chezmoi.os "linux" }}
+  
+  # Tool configuration from 1Password (required)
+  tools:
+    atuin_sync_address: {{ onepasswordRead "op://Private/Atuin Config/Section_ln67dbyxwgklnnen7mahvgmmta/sync_address" | quote }}
+    kubectl_context: "default"
+    editor: "nvim"
+
+  # Homebrew configuration
+  homebrew:
+    bundle_file: "{{ .chezmoi.homeDir }}/.config/brew/Brewfile"
+    
+  # 1Password secret references (examples - customize for your vault structure)
+  secrets:
+    # Example secret references - uncomment and modify as needed
+    # Add your own secret references here following this pattern:
+    # secret_name: VALUE_FROM_1PASSWORD
+    
+    # Google Cloud Platform secrets - configure these in 1Password first
+    gcp_project_id: ""
+    gcp_service_account_key: ""

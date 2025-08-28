@@ -1,0 +1,16 @@
+# Atuin - Shell history sync
+if type -q atuin
+    {{- if .tools.atuin_sync_address }}
+    # Set sync address from 1Password
+    set -gx ATUIN_SYNC_ADDRESS {{ .tools.atuin_sync_address }}
+    {{- else }}
+    # No sync server configured - Atuin will work locally only
+    echo "⚠️  Atuin sync server not configured. Install 1Password CLI and configure 'Atuin Config' item."
+    {{- end }}
+    
+    # Initialize Atuin for Fish
+    atuin init fish | source
+    
+    # Source the atuin environment if available
+    test -f {{ .chezmoi.homeDir }}/.atuin/bin/env.fish && source {{ .chezmoi.homeDir }}/.atuin/bin/env.fish
+end

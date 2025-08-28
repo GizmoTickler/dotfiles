@@ -1,0 +1,35 @@
+# Global environment variables managed by 1Password
+{{- if .onepassword.enabled }}
+
+# Development API Keys (uncomment and configure your vault items)
+# export GITHUB_TOKEN="$(op read 'op://Private/GitHub Personal Access Token/password')"
+# export OPENAI_API_KEY="$(op read 'op://Private/OpenAI API Key/password')"
+# export DOCKER_HUB_TOKEN="$(op read 'op://Private/Docker Hub Token/password')"
+# export ANTHROPIC_API_KEY="$(op read 'op://Private/Anthropic API Key/password')"
+
+# Cloud Provider Credentials  
+# export AWS_ACCESS_KEY_ID="$(op read "op://Private/AWS Credentials/username')"
+# export AWS_SECRET_ACCESS_KEY="$(op read "op://Private/AWS Credentials/password')"
+# export DIGITALOCEAN_TOKEN="$(op read "op://Private/DigitalOcean API Token/password')"
+
+# Database Connections
+# export DATABASE_URL="$(op read "op://Private/Database Connection/url')"
+# export REDIS_URL="$(op read "op://Private/Redis Connection/url')"
+
+# Kubernetes Configuration
+# export KUBECONFIG="$(op read "op://Private/Kubernetes Config/kubeconfig')"
+
+# Custom Application Secrets
+# export MY_APP_SECRET="$(op read "op://Private/My App Secret/password')"
+
+{{- else }}
+
+# 1Password CLI not available - using fallback values
+# Install 1Password CLI: brew install 1password-cli
+echo "⚠️  1Password CLI not found. Install with: brew install 1password-cli"
+
+{{- end }}
+
+# Always available environment variables
+export EDITOR="{{ .tools.editor }}"
+export VISUAL="$EDITOR"
