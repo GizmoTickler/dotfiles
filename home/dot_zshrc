@@ -23,3 +23,61 @@ SAVEHIST=10000
 # Enable completions
 autoload -Uz compinit
 compinit
+
+# Environment variables
+export EDITOR="{{ .tools.editor }}"
+export VISUAL="$EDITOR"
+export KUBE_EDITOR="$EDITOR"
+
+# Language settings
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Development environment
+export GOPATH="$HOME/.go"
+export GOBIN="$HOME/.go/bin"
+export ANSIBLE_FORCE_COLOR=true
+export ANSIBLE_HOST_KEY_CHECKING=False
+export PY_COLORS=true
+
+# XDG Base Directory Specification
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+# Python configuration
+export PYTHONPATH="$HOME/.local/lib/python"
+
+# Node.js configuration
+export NPM_CONFIG_PREFIX="$HOME/.npm-global"
+
+# Rust configuration
+export CARGO_HOME="$HOME/.cargo"
+
+# Kubernetes configuration
+{{- if .onepassword.enabled }}
+# When 1Password is enabled, use local config but can retrieve from 1Password
+export KUBECONFIG="$HOME/.kube/config"
+export TALOSCONFIG="$HOME/.talos/config"
+{{- else }}
+# Set default configs if they exist
+[[ -f "$HOME/.kube/config" ]] && export KUBECONFIG="$HOME/.kube/config"
+[[ -f "$HOME/.talos/config" ]] && export TALOSCONFIG="$HOME/.talos/config"
+{{- end }}
+
+# SOPS configuration
+{{- if .onepassword.enabled }}
+# When 1Password is enabled, use local age key file but can retrieve from 1Password
+export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/age.key"
+{{- else }}
+# Use local age key file if exists
+[[ -f "$HOME/.config/sops/age/age.key" ]] && export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/age.key"
+{{- end }}
+
+# Add common paths to PATH
+path+=("$HOME/.local/bin")
+path+=("$HOME/.cargo/bin")
+path+=("$HOME/.go/bin")
+path+=("$HOME/.npm-global/bin")
+path+=("$HOME/.krew/bin")
+export PATH
