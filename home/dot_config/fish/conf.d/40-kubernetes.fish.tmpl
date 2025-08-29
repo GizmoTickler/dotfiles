@@ -3,9 +3,15 @@ if type -q kubectl
     # Add kubectl completion
     kubectl completion fish | source
     
+    # Set KUBECONFIG - use local file or retrieve from 1Password
+    {{- if .onepassword.enabled }}
+    # When 1Password is enabled, use local config but can retrieve from 1Password
+    set -gx KUBECONFIG {{ .chezmoi.homeDir }}/.kube/config
+    {{- else }}
     # Set default context if specified
     {{- if .tools.kubectl_context }}
     set -gx KUBECONFIG {{ .chezmoi.homeDir }}/.kube/config
+    {{- end }}
     {{- end }}
 end
 
@@ -17,4 +23,15 @@ end
 # Talos CLI
 if type -q talosctl
     talosctl completion fish | source
+    
+    # Set TALOSCONFIG - use local file or retrieve from 1Password
+    {{- if .onepassword.enabled }}
+    # When 1Password is enabled, use local config but can retrieve from 1Password
+    set -gx TALOSCONFIG {{ .chezmoi.homeDir }}/.talos/config
+    {{- else }}
+    # Use local talosconfig if exists
+    if test -f {{ .chezmoi.homeDir }}/.talos/config
+        set -gx TALOSCONFIG {{ .chezmoi.homeDir }}/.talos/config
+    end
+    {{- end }}
 end
