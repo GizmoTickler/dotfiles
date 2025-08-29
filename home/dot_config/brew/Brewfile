@@ -11,6 +11,7 @@ brew "git-lfs"
 brew "curl"
 brew "wget"
 brew "openssh"
+brew "watch"
 
 # === Shell and Prompt ===
 brew "fish"
