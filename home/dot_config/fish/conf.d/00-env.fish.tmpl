@@ -28,6 +28,17 @@ set -gx NPM_CONFIG_PREFIX {{ .chezmoi.homeDir }}/.npm-global
 # Rust configuration
 set -gx CARGO_HOME {{ .chezmoi.homeDir }}/.cargo
 
+# SOPS configuration
+{{- if .onepassword.enabled }}
+# When 1Password is enabled, use local age key file but can retrieve from 1Password
+set -gx SOPS_AGE_KEY_FILE {{ .chezmoi.homeDir }}/.config/sops/age/age.key
+{{- else }}
+# Use local age key file if exists
+if test -f {{ .chezmoi.homeDir }}/.config/sops/age/age.key
+    set -gx SOPS_AGE_KEY_FILE {{ .chezmoi.homeDir }}/.config/sops/age/age.key
+end
+{{- end }}
+
 # Add common paths to PATH
 fish_add_path --global {{ .chezmoi.homeDir }}/.local/bin
 fish_add_path --global {{ .chezmoi.homeDir }}/.cargo/bin
