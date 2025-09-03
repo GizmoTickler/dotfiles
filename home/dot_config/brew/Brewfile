@@ -12,6 +12,7 @@ brew "curl"
 brew "wget"
 brew "openssh"
 brew "watch"
+brew "govc"
 
 # === Shell and Prompt ===
 brew "fish"
@@ -38,6 +39,7 @@ brew "isort"        # Python import sorter
 brew "shfmt"        # Shell formatter
 brew "hadolint"     # Dockerfile linter
 brew "taplo"        # TOML formatter
+brew "lefthook"
 
 # === Programming Languages & Runtimes ===
 brew "node"         # Node.js latest stable
