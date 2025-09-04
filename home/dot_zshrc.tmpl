@@ -87,3 +87,14 @@ path+=("$HOME/.go/bin")
 path+=("$HOME/.npm-global/bin")
 path+=("$HOME/.krew/bin")
 export PATH
+
+# Atuin - Shell history sync
+if command -v atuin >/dev/null 2>&1; then
+    {{- if .tools.atuin_sync_address }}
+    # Set sync address from 1Password
+    export ATUIN_SYNC_ADDRESS={{ .tools.atuin_sync_address }}
+    {{- end }}
+    
+    # Initialize Atuin for Zsh
+    eval "$(atuin init zsh)"
+fi
