@@ -9,9 +9,13 @@
 {{- if .git.signingkey }}
 [gpg]
   format = ssh
-  {{- if .onepassword.enabled }}
-  ssh.program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
-  {{- end }}
+{{- end }}
+
+{{- if .git.signingkey }}
+{{- if .onepassword.enabled }}
+[gpg "ssh"]
+  program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+{{- end }}
 {{- end }}
 
 [core]
