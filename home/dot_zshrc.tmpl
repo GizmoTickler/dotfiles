@@ -74,6 +74,12 @@ export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/age.key"
 [[ -f "$HOME/.config/sops/age/age.key" ]] && export SOPS_AGE_KEY_FILE="$HOME/.config/sops/age/age.key"
 {{- end }}
 
+# 1Password SSH Agent configuration
+{{- if .onepassword.enabled }}
+# Set SSH_AUTH_SOCK to use 1Password's SSH agent
+export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
+{{- end }}
+
 # Add common paths to PATH
 path+=("$HOME/.local/bin")
 path+=("$HOME/.cargo/bin")
