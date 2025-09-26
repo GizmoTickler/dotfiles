@@ -82,6 +82,14 @@ install_essentials() {
     else
         log "✅ Chezmoi already installed"
     fi
+
+    # Install Claude Code CLI
+    if ! command -v claude &> /dev/null; then
+        log "Installing Claude Code CLI..."
+        curl -fsSL https://claude.ai/install.sh | bash -s latest
+    else
+        log "✅ Claude Code CLI already installed"
+    fi
 }
 
 # Setup 1Password CLI authentication
@@ -209,6 +217,7 @@ main() {
     log "   ✅ Homebrew package manager"
     log "   ✅ 1Password CLI (authenticated)"
     log "   ✅ Chezmoi dotfiles manager"
+    log "   ✅ Claude Code CLI"
     log "   ✅ Development tools from Brewfile"
     log "   ✅ Fish shell with Starship prompt"
     log "   ✅ Neovim with modern plugin setup"
