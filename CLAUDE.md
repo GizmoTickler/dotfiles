@@ -1,0 +1,1 @@
+- the changes should be made in this dot files repo, no change must be made directly in the local chezmoi directory

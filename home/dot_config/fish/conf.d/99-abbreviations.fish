@@ -193,6 +193,20 @@ if type -q op
     abbr signin "op signin"           # Sign in to 1Password
 end
 
+# === Claude & AI Tools ===
+if type -q claude
+    abbr claude claude
+    abbr mcplist "claude mcp list"
+    abbr mcpadd "claude mcp add"
+    abbr mcpremove "claude mcp remove"
+end
+
+# Serena MCP Server
+abbr serena serena
+abbr si "serena install"
+abbr sr "serena remove"
+abbr ss "serena status"
+
 # === Quick config edits ===
 abbr fishconfig "$EDITOR ~/.config/fish/config.fish"
 abbr starshipconfig "$EDITOR ~/.config/starship.toml"

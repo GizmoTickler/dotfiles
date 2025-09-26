@@ -92,9 +92,89 @@ export PATH
 if command -v atuin >/dev/null 2>&1; then
     {{- if .tools.atuin_sync_address }}
     # Set sync address from 1Password
-    export ATUIN_SYNC_ADDRESS={{ .tools.atuin_sync_address }}
+    export ATUIN_SYNC_ADDRESS="{{ .tools.atuin_sync_address }}"
     {{- end }}
-    
+
     # Initialize Atuin for Zsh
     eval "$(atuin init zsh)"
 fi
+
+# Serena MCP Server functions for Claude
+serena-install() {
+    # Get the current working directory
+    local project_dir=$(pwd)
+
+    # Run the Claude MCP add command with Serena
+    echo "🤖 Installing Serena MCP server for Claude in: $project_dir"
+    claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server --context ide-assistant --project "$project_dir"
+
+    if [[ $? -eq 0 ]]; then
+        echo "✅ Serena MCP server installed successfully!"
+        echo "   You can now use Serena's intelligent code tools in Claude."
+    else
+        echo "❌ Failed to install Serena MCP server"
+        return 1
+    fi
+}
+
+serena-remove() {
+    echo "🗑️  Removing Serena MCP server from Claude..."
+    claude mcp remove serena
+
+    if [[ $? -eq 0 ]]; then
+        echo "✅ Serena MCP server removed successfully!"
+    else
+        echo "❌ Failed to remove Serena MCP server"
+        return 1
+    fi
+}
+
+serena-status() {
+    echo "🔍 Checking Serena MCP server status..."
+    claude mcp list | grep -q serena
+
+    if [[ $? -eq 0 ]]; then
+        echo "✅ Serena MCP server is installed"
+        claude mcp list | grep serena
+    else
+        echo "❌ Serena MCP server is not installed"
+        echo "   Run 'serena-install' to install it for the current project"
+    fi
+}
+
+serena() {
+    if [[ $# -eq 0 ]]; then
+        # Default to install if no arguments
+        serena-install
+    else
+        case "$1" in
+            install)
+                serena-install
+                ;;
+            remove)
+                serena-remove
+                ;;
+            status)
+                serena-status
+                ;;
+            help|*)
+                echo "Serena MCP Server Manager for Claude"
+                echo ""
+                echo "Usage:"
+                echo "  serena [command]"
+                echo ""
+                echo "Commands:"
+                echo "  install  - Install Serena MCP server for the current project (default)"
+                echo "  remove   - Remove Serena MCP server from Claude"
+                echo "  status   - Check if Serena MCP server is installed"
+                echo "  help     - Show this help message"
+                echo ""
+                echo "Examples:"
+                echo "  serena                  # Install for current project"
+                echo "  serena install          # Install for current project"
+                echo "  serena remove           # Remove Serena"
+                echo "  serena status           # Check installation status"
+                ;;
+        esac
+    fi
+}
