@@ -473,6 +473,9 @@ brew bundle --file ~/.config/brew/Brewfile
 # Update all tools
 brew update && brew upgrade
 ```
+# Claude Desktop Config
+- Install Claude Desktop from [official website](https://claude.ai/desktop)
+- Add MCP server to desktop config from the claude_desktop_config.json manually
 
 ## 🤝 Contributing
 

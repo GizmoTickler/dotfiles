@@ -35,3 +35,4 @@ tests/
 
 # Claude Code directory (contains local settings and cache)
 .claude/
+.serena/
