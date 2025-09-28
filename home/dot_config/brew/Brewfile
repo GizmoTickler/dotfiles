@@ -67,6 +67,10 @@ brew "talosctl"     # Talos Linux CLI
 brew "docker"
 brew "docker-buildx"
 
+# === AI Coding Tools ===
+brew gemini-cli
+brew codex
+
 # === Cloud Tools ===
 brew "doctl"        # DigitalOcean CLI
 brew "cloudflared"  # Cloudflare tunnel
