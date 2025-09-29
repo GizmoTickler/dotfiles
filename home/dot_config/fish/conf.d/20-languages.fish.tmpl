@@ -20,12 +20,9 @@ if type -q node
     fish_add_path --global {{ .chezmoi.homeDir }}/.npm-global/bin
 end
 
-# Go - Use Homebrew Go with custom GOPATH
+# Go - Use Homebrew Go (let Go manage its own defaults)
 if type -q go
-    set -gx GOROOT (go env GOROOT)
-    set -gx GOPATH {{ .chezmoi.homeDir }}/.go
-    set -gx GOBIN {{ .chezmoi.homeDir }}/.go/bin
-    fish_add_path --global {{ .chezmoi.homeDir }}/.go/bin
+    fish_add_path --global (go env GOPATH)/bin
 end
 
 # Rust - Use Homebrew Rust with Cargo
