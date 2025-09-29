@@ -82,11 +82,6 @@ export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/
 path+=("$HOME/.local/bin")
 path+=("$HOME/.cargo/bin")
 
-# Go - Use Homebrew Go (let Go manage its own defaults)
-if command -v go >/dev/null 2>&1; then
-    path+=("$(go env GOPATH)/bin")
-fi
-
 path+=("$HOME/.npm-global/bin")
 path+=("$HOME/.krew/bin")
 export PATH
