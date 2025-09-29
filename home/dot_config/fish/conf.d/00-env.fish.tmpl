@@ -8,8 +8,6 @@ set -gx LANG en_US.UTF-8
 set -gx LC_ALL en_US.UTF-8
 
 # Development environment
-set -gx GOPATH {{ .chezmoi.homeDir }}/.go
-set -gx GOBIN {{ .chezmoi.homeDir }}/.go/bin
 set -gx ANSIBLE_FORCE_COLOR true
 set -gx ANSIBLE_HOST_KEY_CHECKING False
 set -gx PY_COLORS true
@@ -42,5 +40,4 @@ end
 # Add common paths to PATH
 fish_add_path --global {{ .chezmoi.homeDir }}/.local/bin
 fish_add_path --global {{ .chezmoi.homeDir }}/.cargo/bin
-fish_add_path --global {{ .chezmoi.homeDir }}/.go/bin
 fish_add_path --global {{ .chezmoi.homeDir }}/.npm-global/bin

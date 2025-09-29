@@ -24,6 +24,7 @@ end
 if type -q go
     set -gx GOROOT (go env GOROOT)
     set -gx GOPATH {{ .chezmoi.homeDir }}/.go
+    set -gx GOBIN {{ .chezmoi.homeDir }}/.go/bin
     fish_add_path --global {{ .chezmoi.homeDir }}/.go/bin
 end
 

@@ -34,8 +34,7 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 # Development environment
-export GOPATH="$HOME/.go"
-export GOBIN="$HOME/.go/bin"
+# Go - Use Homebrew Go with custom GOPATH (set conditionally in PATH section)
 export ANSIBLE_FORCE_COLOR=true
 export ANSIBLE_HOST_KEY_CHECKING=False
 export PY_COLORS=true
@@ -83,7 +82,15 @@ export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/
 # Add common paths to PATH
 path+=("$HOME/.local/bin")
 path+=("$HOME/.cargo/bin")
-path+=("$HOME/.go/bin")
+
+# Go - Set environment variables and PATH if Go is installed
+if command -v go >/dev/null 2>&1; then
+    export GOROOT="$(go env GOROOT)"
+    export GOPATH="$HOME/.go"
+    export GOBIN="$HOME/.go/bin"
+    path+=("$HOME/.go/bin")
+fi
+
 path+=("$HOME/.npm-global/bin")
 path+=("$HOME/.krew/bin")
 export PATH
