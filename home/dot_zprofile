@@ -1,0 +1,9 @@
+# Zsh profile - runs for login shells
+# This file loads environment setup that needs to be available system-wide
+
+# Homebrew environment setup
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# 1Password SSH Agent
+# Use the correct path for 1Password 8's SSH agent socket
+export SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
