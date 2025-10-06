@@ -130,7 +130,7 @@ cask "visual-studio-code"
 cask "firefox"
 cask "discord"
 cask "iterm2"
-cash "ghosty"
+cash "ghostty"
 
 # === Fonts ===
 cask "font-fira-code-nerd-font"
