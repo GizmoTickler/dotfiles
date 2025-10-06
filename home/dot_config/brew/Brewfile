@@ -53,10 +53,10 @@ brew "pipx"         # Install Python applications in isolated environments
 
 # === Kubernetes Ecosystem ===
 brew "kubectl"
-brew "krew"         # kubectl plugin manager  
+brew "krew"         # kubectl plugin manager
 brew "k9s"          # Kubernetes TUI
 brew "helm"
-brew "helmfile" 
+brew "helmfile"
 brew "kustomize"
 brew "kubecolor"    # Colorized kubectl
 brew "kubeconform"  # Kubernetes YAML validation
@@ -87,7 +87,7 @@ brew "doggo"        # Modern dig
 
 # === Data Processing ===
 brew "jq"           # JSON processor
-brew "yq"           # YAML processor  
+brew "yq"           # YAML processor
 brew "jo"           # JSON output
 
 # === System Utils ===
@@ -130,6 +130,7 @@ cask "visual-studio-code"
 cask "firefox"
 cask "discord"
 cask "iterm2"
+cash "ghosty"
 
 # === Fonts ===
 cask "font-fira-code-nerd-font"
@@ -145,6 +146,6 @@ cask "font-meslo-lg-nerd-font"
 # === Language Servers (for Neovim LSP) ===
 # These will be installed by Mason in Neovim, but can be pre-installed
 # brew "lua-language-server"
-# brew "typescript-language-server" 
+# brew "typescript-language-server"
 # brew "pyright"
 # brew "gopls"
