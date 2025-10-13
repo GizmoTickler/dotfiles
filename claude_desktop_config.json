@@ -1,26 +1,15 @@
 {
   "mcpServers": {
-    "serena": {
-      "command": "/opt/homebrew/bin/uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/oraios/serena",
-        "serena",
-        "start-mcp-server"
-      ]
-    },
-    "playwright": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@executeautomation/playwright-mcp-server"
-      ]
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
+      }
     },
     "desktop-commander": {
       "command": "npx",
-      "args": [
-        "@wonderwhy-er/desktop-commander@latest"
-      ]
+      "args": ["@wonderwhy-er/desktop-commander@latest"]
     }
   }
 }
