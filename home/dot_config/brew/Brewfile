@@ -4,6 +4,7 @@
 # Taps
 tap "fluxcd/tap"
 tap "go-task/tap"
+tap "anthropic/claude"
 
 # === Essential Tools ===
 brew "git"
@@ -69,7 +70,7 @@ brew "docker-buildx"
 
 # === AI Coding Tools ===
 brew gemini-cli
-brew codex
+cask claude-code
 
 # === Cloud Tools ===
 brew "doctl"        # DigitalOcean CLI
@@ -117,7 +118,6 @@ brew "lolcat"       # Rainbow text
 brew "thefuck"      # Command correction
 brew "viddy"        # Modern watch
 brew "minijinja-cli" # Jinja2 templating
-brew "tailscale"    # VPN mesh network
 
 # === Specialized Tools ===
 brew "fluxcd/tap/flux"      # GitOps for Kubernetes
@@ -126,10 +126,7 @@ brew "go-task/tap/go-task"  # Task runner
 # === Applications (Casks) ===
 cask "1password"
 cask "1password-cli"
-cask "visual-studio-code"
-cask "firefox"
 cask "discord"
-cask "iterm2"
 cash "ghostty"
 
 # === Fonts ===
